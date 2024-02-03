@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frontend Showcase for Chatbot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="chat-container">
+    <div class="logo-container">
+      <img src="images/logo.png" alt="Chatbot Logo">
+      <div class="text-container">
+        <p class="tagline">Aameeq ChatBot</p>
+        <p class="additional-line">Ask me Anything!</p>
+      </div>
+    </div>
+    
+    <div class="chat-box">
+      <!-- Chat messages -->
+    </div>
+
+    <div class="user-input-container">
+      <input type="text" class="user-input" placeholder="Type a message...">
+      <button class="send-btn">Send</button>
+    </div>
+  </div>
+    
+  <script>
+    // JavaScript code for chatbot functionality
+    const userInput = document.querySelector('.user-input');
+    const chatBox = document.querySelector('.chat-box');
+
+    function handleUserInput() {
+      const userMessage = userInput.value;
+      displayMessage('user', userMessage);
+      const botResponse = generateBotResponse(userMessage);
+      setTimeout(() => {
+        displayMessage('bot', botResponse);
+      }, 1000);
+      userInput.value = '';
+    }
+
+     function displayMessage(sender, message) {
+      const chatMsgDiv = document.createElement('div');
+      chatMsgDiv.classList.add('chat-msg', sender);
+
+      const avatarImg = document.createElement('img');
+      avatarImg.classList.add('avatar');
+
+      const messageParagraph = document.createElement('p');
+      messageParagraph.classList.add('message');
+      messageParagraph.textContent = message;
+
+      if (sender === 'user') {
+        avatarImg.src = 'images/personlogo.png';
+        avatarImg.alt = 'User Avatar';
+      } else {
+        avatarImg.src = 'images/chatbotlogo.png';
+        avatarImg.alt = 'Chatbot Avatar';
+      }
+
+      chatMsgDiv.appendChild(avatarImg);
+      chatMsgDiv.appendChild(messageParagraph);
+      chatBox.appendChild(chatMsgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+
+    document.querySelector('.send-btn').addEventListener('click', () => {
+      handleUserInput();
+    });
+
+    userInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        handleUserInput();
+      }
+    });
+  </script>
+</body>
+</html>
